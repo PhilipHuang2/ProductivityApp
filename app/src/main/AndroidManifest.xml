@@ -10,6 +10,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".CalenderActivity"
+            android:label="@string/title_activity_calender"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.productivityapp.MainActivity" />
+        </activity>
+        <activity
+            android:name=".DiaryActivity"
+            android:label="@string/title_activity_diary"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.productivityapp.MainActivity" />
+        </activity>
+        <activity
             android:name=".ToDoList"
             android:label="@string/title_activity_to_do_list"
             android:parentActivityName=".MainActivity"

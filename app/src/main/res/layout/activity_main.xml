@@ -29,11 +29,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/journalButton"
+        android:id="@+id/DiaryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="@string/journal"
+        android:text="@string/Diary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toDoListButton" />
@@ -46,6 +46,6 @@
         android:text="@string/calender"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/journalButton" />
+        app:layout_constraintTop_toBottomOf="@+id/DiaryButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

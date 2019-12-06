@@ -13,6 +13,7 @@ public class Diary implements Comparable<Diary>{
         str = "";
         this.day = 0;
         this.year = 1990;
+
         this.month = 0;
     }
 

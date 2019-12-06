@@ -45,10 +45,6 @@ public class CalenderActivity extends AppCompatActivity {
         saveDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                DatabaseReference myRef = database.getReference("To Do List");
-//                String key = myRef.push().getKey();
-//                myRef.child(key).setValue(myDate.getText());
                 if(!myDate.getText().equals("Choose a Date") && !myDate.getText().equals("Please choose a date to continue."))
                     openJournalEntry();
                 else
@@ -59,8 +55,29 @@ public class CalenderActivity extends AppCompatActivity {
 
     public void openJournalEntry()
     {
+        String date = myDate.getText().toString();
+        int month = 0;
+        int day = 0;
+        int year = 0;
+        int check = 0;
+        for (int i = 0; i < date.length(); i++)
+        {
+            char c = date.charAt(i);
+            if(Character.isDigit(c))
+            {
+                switch(check){
+                    case 0 : month = 10 * month + Character.getNumericValue(c); break;
+                    case 1: day = 10 * day + Character.getNumericValue(c); break;
+                    case 2: year = year * 10 + Character.getNumericValue(c); break;
+                }
+            }
+            else
+                check++;
+        }
         Intent intent = new Intent(this, JournalEntryActivity.class);
-        intent.putExtra("currentDate", myDate.getText());
+        intent.putExtra("month", month);
+        intent.putExtra("day", day);
+        intent.putExtra("year", year);
         startActivity(intent);
     }
 }

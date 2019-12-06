@@ -10,6 +10,7 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="10dp"
         android:text="Dummy Value."
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,6 +22,9 @@
         android:id="@+id/EditTextBox1"
         android:layout_width="370dp"
         android:layout_height="wrap_content"
+        android:maxLines="6"
+        android:fadeScrollbars="true"
+        android:maxLength="250"
         android:layout_marginTop="76dp"
         android:gravity="center_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,5 +53,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Maximum of 250 characters."
+        app:layout_constraintBottom_toTopOf="@+id/EditTextBox1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintVertical_bias="0.633" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

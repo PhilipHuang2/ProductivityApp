@@ -31,6 +31,7 @@ public class JournalEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 paragraph.setText("");
+                finish();
             }
         });
     }

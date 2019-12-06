@@ -65,14 +65,14 @@
             android:id="@+id/saveDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" android:text="Save Date">
+            android:layout_weight="1" android:text="Save Journal">
         </Button>
         <Button
             android:id="@+id/loadDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Load Date">
+            android:text="Load Diary">
         </Button>
     </LinearLayout>
 

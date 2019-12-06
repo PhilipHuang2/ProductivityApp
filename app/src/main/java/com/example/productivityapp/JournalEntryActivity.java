@@ -22,43 +22,29 @@ public class JournalEntryActivity extends AppCompatActivity {
         final EditText paragraph;
 
         Intent intent = getIntent();
-        TextView title;
+        final int day = intent.getIntExtra("day",0);
+        final int month = intent.getIntExtra("month",0);
+        final int year = intent.getIntExtra("year",0);
 
-        final String date = intent.getStringExtra("currentDate");
+        TextView title;
         title = findViewById(R.id.title);
+        String date = (month) + "/" + day +  "/" + year;
         title.setText(date);
+
         paragraph = findViewById(R.id.EditTextBox1);
 
         submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int month = 0;
-                int day = 0;
-                int year = 0;
-                int check = 0;
-                for (int i = 0; i < date.length(); i++)
-                {
-                    char c = date.charAt(i);
-                    if(Character.isDigit(c))
-                    {
-                        switch(check){
-                            case 0 : month = 10 * month + Character.getNumericValue(c); break;
-                            case 1: day = 10 * day + Character.getNumericValue(c); break;
-                            case 2: year = year * 10 + Character.getNumericValue(c); break;
-                        }
-                    }
-                    else
-                        check++;
-                }
+
                 String dummy = paragraph.getText().toString();
                 Diary newEntry = new Diary(month,day,year,dummy);
+
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("Diary");
                 String key = myRef.push().getKey();
                 myRef.child(key).setValue(newEntry);
-
-
                 finish();
             }
         });

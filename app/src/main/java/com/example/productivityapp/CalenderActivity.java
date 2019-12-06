@@ -52,8 +52,6 @@ public class CalenderActivity extends AppCompatActivity {
                   openJournalEntry();
             }
         });
-
-
     }
 
     public void openJournalEntry()
@@ -62,5 +60,4 @@ public class CalenderActivity extends AppCompatActivity {
         intent.putExtra("currentDate", myDate.getText());
         startActivity(intent);
     }
-
 }

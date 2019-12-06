@@ -4,13 +4,13 @@ public class ToDoItem implements Comparable<ToDoItem> {
     private String item;
     private boolean complete;
 
-    ToDoItem()
+    public ToDoItem()
     {
         item = "";
         complete = false;
     }
 
-    ToDoItem(String text)
+    public ToDoItem(String text)
     {
         item = text;
         complete = false;

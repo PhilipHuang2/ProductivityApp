@@ -10,6 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".JournalEntryActivity"
+            android:label="JournalEntryActivity"
+            android:parentActivityName=".CalenderActivity"
+            android:theme="@style/AppTheme"
+            >
+
+        </activity>
+        <activity
             android:name=".CalenderActivity"
             android:label="@string/title_activity_calender"
             android:parentActivityName=".MainActivity"

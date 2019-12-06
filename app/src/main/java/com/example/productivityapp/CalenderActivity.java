@@ -1,5 +1,6 @@
 package com.example.productivityapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,14 +45,22 @@ public class CalenderActivity extends AppCompatActivity {
         saveDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("To Do List");
-
-                String key = myRef.push().getKey();
-                myRef.child(key).setValue(myDate.getText());
+//                FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                DatabaseReference myRef = database.getReference("To Do List");
+//                String key = myRef.push().getKey();
+//                myRef.child(key).setValue(myDate.getText());
+                if(!myDate.getText().equals("Choose a Date") && !myDate.getText().equals("Please choose a date to continue."))
+                    openJournalEntry();
+                else
+                    myDate.setText("Please choose a date to continue.");
             }
         });
     }
 
+    public void openJournalEntry()
+    {
+        Intent intent = new Intent(this, JournalEntryActivity.class);
+        intent.putExtra("currentDate", myDate.getText());
+        startActivity(intent);
+    }
 }

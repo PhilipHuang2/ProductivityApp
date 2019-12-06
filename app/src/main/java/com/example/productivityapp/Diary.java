@@ -4,38 +4,68 @@ import java.util.Date;
 
 public class Diary implements Comparable<Diary>{
     private String str;
+    private int month;
+    private int day;
+    private int year;
 
-    private Date date;
 
     public Diary(){
         str = "";
-        date = new Date();
+        this.day = NULL;
+        this.year = NULL;
+        this.str = NULL;
     }
 
+
     public Diary(int month, int day, int year, String str){
-        date = new Date(year, month, day);
+        this.month = month;
+        this.day = day;
+        this.year = year;
         this.str = str;
     }
 
-    public Date getDate(){
-        return date;
+    public int getMonth(){
+        return month;
+    }
+
+    public int getDay(){
+        return day;
+    }
+
+    public int getYear(){
+        return year;
     }
 
     public String getDiary(){
         return str;
     }
 
-    public void setDate(int month, int day, int year){
-        date = new Date(year, month, day);
+    public void setMonth(int month){
+        this.month = month;
+    }
+
+    public void setDay(int day){
+        this.day = day;
+    }
+
+    public void setYear(int year){
+        this.year = year;
     }
 
     public void setDiary(String str){
         this.str = str;
     }
 
+
     public int compareTo(Diary d)
     {
-        return this.date.compareTo( d.getDate() );
+        if (this.year - d.getYear() == 0){
+            if (this.month - d.getMonth() == 0){
+                return this.day - d.getDay();
+            }
+            return this.month - d.getMonth();
+        }
+        return this.year - d.getYear();
     }
 
 }

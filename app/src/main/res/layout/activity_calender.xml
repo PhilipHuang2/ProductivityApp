@@ -33,8 +33,6 @@
         android:text="Current Date"
         android:textColor="#FFF"
         android:textSize="23sp"
-
-
         />
 
     <LinearLayout
@@ -52,6 +50,34 @@
         </CalendarView>
 
     </LinearLayout>
+
+
+
+    <LinearLayout
+
+        android:id="@+id/LinearLayout02"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="30dp"
+        >
+        <Button
+            android:id="@+id/saveDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" android:text="Save Date">
+        </Button>
+        <Button
+            android:id="@+id/loadDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Load Date">
+        </Button>
+    </LinearLayout>
+
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

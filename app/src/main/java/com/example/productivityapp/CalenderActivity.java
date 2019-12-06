@@ -46,11 +46,10 @@ public class CalenderActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("message");
+                DatabaseReference myRef = database.getReference("To Do List");
 
-                myRef.setValue("Hello, World!");
-                myDate.setText("Item has been added.");
-
+                String key = myRef.push().getKey();
+                myRef.child(key).setValue(myDate.getText());
             }
         });
     }

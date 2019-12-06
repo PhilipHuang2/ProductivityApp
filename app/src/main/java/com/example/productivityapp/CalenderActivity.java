@@ -49,7 +49,10 @@ public class CalenderActivity extends AppCompatActivity {
 //                DatabaseReference myRef = database.getReference("To Do List");
 //                String key = myRef.push().getKey();
 //                myRef.child(key).setValue(myDate.getText());
-                  openJournalEntry();
+                if(!myDate.getText().equals("Choose a Date") && !myDate.getText().equals("Please choose a date to continue."))
+                    openJournalEntry();
+                else
+                    myDate.setText("Please choose a date to continue.");
             }
         });
     }

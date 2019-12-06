@@ -11,9 +11,9 @@ public class Diary implements Comparable<Diary>{
 
     public Diary(){
         str = "";
-        this.day = NULL;
-        this.year = NULL;
-        this.str = NULL;
+        this.day = 0;
+        this.year = 0;
+        this.month = 0;
     }
 
 

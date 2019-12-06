@@ -48,7 +48,8 @@ public class JournalEntryActivity extends AppCompatActivity {
                             case 2: year = year * 10 + Character.getNumericValue(c); break;
                         }
                     }
-                    check++;
+                    else
+                        check++;
                 }
                 String dummy = paragraph.getText().toString();
                 Diary newEntry = new Diary(month,day,year,dummy);

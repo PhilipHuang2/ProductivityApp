@@ -10,12 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".JournalLoadActivity"
+            android:label="@string/title_activity_journal_load"
+            android:parentActivityName=".CalenderActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.productivityapp.CalenderActivity" />
+        </activity>
+        <activity
             android:name=".JournalEntryActivity"
             android:label="JournalEntryActivity"
             android:parentActivityName=".CalenderActivity"
-            android:theme="@style/AppTheme">
-            
-        </activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".CalenderActivity"
             android:label="@string/title_activity_calender"

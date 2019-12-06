@@ -21,7 +21,7 @@ public class CalenderActivity extends AppCompatActivity {
 
     private CalendarView calendarView;
     private TextView myDate;
-    private Button saveDataButton;
+    private Button saveDataButton,loadDataButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +49,14 @@ public class CalenderActivity extends AppCompatActivity {
                     openJournalEntry();
                 else
                     myDate.setText("Please choose a date to continue.");
+            }
+        });
+
+        loadDataButton = findViewById(R.id.loadDate);
+        loadDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openJournalLoad();
             }
         });
     }
@@ -80,4 +88,33 @@ public class CalenderActivity extends AppCompatActivity {
         intent.putExtra("year", year);
         startActivity(intent);
     }
+
+    public void openJournalLoad()
+    {
+        String date = myDate.getText().toString();
+        int month = 0;
+        int day = 0;
+        int year = 0;
+        int check = 0;
+        for (int i = 0; i < date.length(); i++)
+        {
+            char c = date.charAt(i);
+            if(Character.isDigit(c))
+            {
+                switch(check){
+                    case 0 : month = 10 * month + Character.getNumericValue(c); break;
+                    case 1: day = 10 * day + Character.getNumericValue(c); break;
+                    case 2: year = year * 10 + Character.getNumericValue(c); break;
+                }
+            }
+            else
+                check++;
+        }
+        Intent intent = new Intent(this, JournalLoadActivity.class);
+        intent.putExtra("month", month);
+        intent.putExtra("day", day);
+        intent.putExtra("year", year);
+        startActivity(intent);
+    }
+
 }

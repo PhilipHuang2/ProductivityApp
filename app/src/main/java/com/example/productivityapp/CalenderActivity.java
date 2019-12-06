@@ -55,8 +55,6 @@ public class CalenderActivity extends AppCompatActivity {
                     myDate.setText("Please choose a date to continue.");
             }
         });
-
-
     }
 
     public void openJournalEntry()
@@ -65,5 +63,4 @@ public class CalenderActivity extends AppCompatActivity {
         intent.putExtra("currentDate", myDate.getText());
         startActivity(intent);
     }
-
 }

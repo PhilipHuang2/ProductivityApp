@@ -13,7 +13,7 @@
             android:name=".CalenderActivity"
             android:label="@string/title_activity_calender"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/CalenderTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.productivityapp.MainActivity" />

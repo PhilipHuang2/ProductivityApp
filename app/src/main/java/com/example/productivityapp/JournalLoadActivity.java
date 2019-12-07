@@ -1,8 +1,12 @@
+// Author Philip Huang
 package com.example.productivityapp;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.productivityapp.Diary;
+import com.example.productivityapp.DiaryAdapter;
+import com.example.productivityapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.ChildEventListener;
@@ -35,8 +39,14 @@ public class JournalLoadActivity extends AppCompatActivity {
     private ChildEventListener childEventListener;
 
     private DiaryAdapter listAdapter;
+    private ArrayList<Diary> diaryList;
 
     private static final String TAG = "MainActivity";
+
+    Intent intent = getIntent();
+    final int day = intent.getIntExtra("day",0);
+    final int month = intent.getIntExtra("month",0);
+    final int year = intent.getIntExtra("year",0);
 
 
 
@@ -48,19 +58,16 @@ public class JournalLoadActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Intent intent = getIntent();
-        final int day = intent.getIntExtra("day",0);
-        final int month = intent.getIntExtra("month",0);
-        final int year = intent.getIntExtra("year",0);
+
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Diary");
-        final ArrayList<Diary> diaryList = new ArrayList<>();
+        diaryList = new ArrayList<>();
 
         childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                listAdapter.add(dataSnapshot.getValue(Diary.class));
+                diaryList.add(dataSnapshot.getValue(Diary.class));
             }
 
             @Override
@@ -88,20 +95,19 @@ public class JournalLoadActivity extends AppCompatActivity {
         listAdapter = new DiaryAdapter(this, diaryList);
         ListView results = findViewById(R.id.listViewResults);
         results.setAdapter(listAdapter);
-
         TextView loadJournalTitle;
         loadJournalTitle = findViewById(R.id.loadJournalTitle);
         String date = "The Diaries from " + month + "/" + day +  "/" + year;
         loadJournalTitle.setText((date));
+    }
 
-
-//        for(Diary d : diaryList)
-//        {
-//            if(d.getYear() == year)// && d.getMonth() == month && d.getDay() == day);
-//
-//                loadJournalTitle.setText(d.getDiary());//listAdapter.add(d);
-//
-//        }
-
+    public void search (View view)
+    {
+        listAdapter.clear();
+        for( Diary d: diaryList)
+        {
+            if(d.getYear() == year && d.getMonth() == month && d.getDay() == day)
+                listAdapter.add(d);
+        }
     }
 }

@@ -1,3 +1,6 @@
+/*
+    Written by Carlos Emilio Yan Ho
+*/
 package com.example.productivityapp;
 
 import androidx.appcompat.app.AppCompatActivity;

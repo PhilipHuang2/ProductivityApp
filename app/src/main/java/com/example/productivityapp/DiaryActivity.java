@@ -15,7 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.text.SimpleDateFormat;
@@ -43,6 +45,8 @@ public class DiaryActivity extends AppCompatActivity {
     SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
     String dateString = format.format( new Date()   );
 
+    Diary deleteTarget ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,8 @@ public class DiaryActivity extends AppCompatActivity {
         // Initializes the references to the database
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Diary");
+
+
 
         // Set up an array that will have the contents that you want to display
         ArrayList<Diary> diaryList = new ArrayList<Diary>();
@@ -71,7 +77,10 @@ public class DiaryActivity extends AppCompatActivity {
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                listAdapter.notifyDataSetChanged();
+                //listAdapter.add( dataSnapshot.getValue(Diary.class));
+            }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
@@ -88,6 +97,21 @@ public class DiaryActivity extends AppCompatActivity {
         ListView results = findViewById(R.id.EntryList);
         results.setAdapter(listAdapter);
 
+
+
+        // Defines what happens when an item of the listView is clicked
+        results.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Get the selected item text from ListView and place it into the deleteTarget variable
+                Diary selectedItem = (Diary) parent.getItemAtPosition(position);
+                deleteTarget = selectedItem;
+
+
+            }
+        });
+
+        //Activity of the newEntryButton
         newEntryButton = findViewById(R.id.newEntryButton);
         newEntryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +120,17 @@ public class DiaryActivity extends AppCompatActivity {
             }
         });
 
+        //Activity for DeleteButton
+        DeleteButton = findViewById(R.id.deleteEntry);
+        DeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myRef.child(deleteTarget.getID()).removeValue();
 
+                // Removes the Contact from the local data structure
+                listAdapter.remove(deleteTarget);
+            }
+        });
     }
 
     public void openDiaryEntry(){
@@ -117,5 +151,6 @@ public class DiaryActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
 
 }

@@ -7,7 +7,7 @@ public class Diary implements Comparable<Diary>{
     private int month;
     private int day;
     private int year;
-
+    private String id;
 
     public Diary(){
         str = "";
@@ -18,11 +18,12 @@ public class Diary implements Comparable<Diary>{
     }
 
 
-    public Diary(int month, int day, int year, String str){
+    public Diary(int month, int day, int year, String str, String id){
         this.month = month;
         this.day = day;
         this.year = year;
         this.str = str;
+        this.id = id;
     }
 
     public int getMonth(){
@@ -39,6 +40,14 @@ public class Diary implements Comparable<Diary>{
 
     public String getDiary(){
         return str;
+    }
+
+    public String getID(){
+        return id;
+    }
+
+    public String getDate(){
+        return "" + getMonth() + "/" + getDay() + "/" + getYear();
     }
 
     public void setMonth(int month){

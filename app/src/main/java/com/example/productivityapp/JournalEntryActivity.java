@@ -38,12 +38,13 @@ public class JournalEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String dummy = paragraph.getText().toString();
-                Diary newEntry = new Diary(month,day,year,dummy);
-
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("Diary");
+
+                String dummy = paragraph.getText().toString();
                 String key = myRef.push().getKey();
+                Diary newEntry = new Diary(month,day,year,dummy,key);
+
                 myRef.child(key).setValue(newEntry);
                 finish();
             }

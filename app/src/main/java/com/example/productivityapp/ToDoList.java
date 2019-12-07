@@ -52,13 +52,15 @@ public class ToDoList extends AppCompatActivity {
     private void onAddTextButtonClick()
     {
         // DatabaseReference ref = database.child("ToDoListItems");
-        String text = this.addTaskInputText.toString();
+        String text = this.addTaskInputText.getEditText().getText().toString();
         if (text != "") {
             // insert to do list item
             String key = database.child("ToDoListItems").push().getKey();
             ToDoItem toDoItem = new ToDoItem(text);
-            // Map<String, Object> map = toDoItem.toMap();
             database.child("ToDoListItems").child(key).setValue(toDoItem);
+
+            // clear the edit text field
+            addTaskInputText.getEditText().getText().clear();
         }
     }
 }

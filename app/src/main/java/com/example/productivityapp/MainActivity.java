@@ -1,5 +1,5 @@
 package com.example.productivityapp;
-
+//Author Philip Huang
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;

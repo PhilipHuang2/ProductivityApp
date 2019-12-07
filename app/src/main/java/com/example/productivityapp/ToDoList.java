@@ -2,31 +2,72 @@ package com.example.productivityapp;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.widget.Button;
+
+import java.util.Map;
 
 public class ToDoList extends AppCompatActivity {
+
+    private com.google.firebase.database.DatabaseReference database;
+
+    private Button addTaskButton;
+    private TextInputLayout addTaskInputText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do_list);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        database = FirebaseDatabase.getInstance().getReference();
+        addTaskButton = findViewById(R.id.addTaskButton);
+
+        // loadDataIntoCurrentCheckboxes();
+
+        addTaskInputText = findViewById(R.id.addTaskTextInput);
+
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onAddTextButtonClick();
+            }
+        });
+    }
+
+    private void loadDataIntoCurrentCheckboxes()
+    {
+        // load any previous stored data into the current 5 checkboxes
+
+        String checkBoxesText[] = new String[5];
+        // database.child("ToDoList").child("");
+    }
+
+    private void onAddTextButtonClick()
+    {
+        // DatabaseReference ref = database.child("ToDoListItems");
+        String text = this.addTaskInputText.getEditText().getText().toString();
+        if (text != "") {
+            insertToDoListItem(text);
+            clearEditTextField();
+        }
+    }
+
+    private void insertToDoListItem(String text)
+    {
+        String key = database.child("ToDoListItems").push().getKey();
+        ToDoItem toDoItem = new ToDoItem(text);
+        database.child("ToDoListItems").child(key).setValue(toDoItem);
+    }
+
+    private void clearEditTextField()
+    {
+        addTaskInputText.getEditText().getText().clear();
     }
 }

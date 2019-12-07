@@ -49,7 +49,6 @@ public class JournalLoadActivity extends AppCompatActivity {
     final int year = intent.getIntExtra("year",0);
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

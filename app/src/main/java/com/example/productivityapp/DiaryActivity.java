@@ -120,6 +120,15 @@ public class DiaryActivity extends AppCompatActivity {
             }
         });
 
+        //Activity of the searchEntryButton
+        SearchButton = findViewById(R.id.searchEntryButton);
+        SearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSearchActivity();
+            }
+        });
+
         //Activity for DeleteButton
         DeleteButton = findViewById(R.id.deleteEntry);
         DeleteButton.setOnClickListener(new View.OnClickListener() {
@@ -152,5 +161,9 @@ public class DiaryActivity extends AppCompatActivity {
 
     }
 
+    public void openSearchActivity(){
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
 
 }

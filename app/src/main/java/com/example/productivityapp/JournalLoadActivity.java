@@ -92,7 +92,7 @@ public class JournalLoadActivity extends AppCompatActivity {
         TextView loadJournalTitle;
         loadJournalTitle = findViewById(R.id.loadJournalTitle);
         String date = "The Diaries from " + month + "/" + day +  "/" + year;
-        loadJournalTitle.setText(date);
+        loadJournalTitle.setText((date));
 
 
 //        for(Diary d : diaryList)

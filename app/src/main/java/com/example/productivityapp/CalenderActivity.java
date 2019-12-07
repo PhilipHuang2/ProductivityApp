@@ -56,7 +56,10 @@ public class CalenderActivity extends AppCompatActivity {
         loadDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openJournalLoad();
+                if(!myDate.getText().equals("Choose a Date") && !myDate.getText().equals("Please choose a date to continue."))
+                    openJournalLoad();
+                else
+                    myDate.setText("Please choose a date to continue.");
             }
         });
     }

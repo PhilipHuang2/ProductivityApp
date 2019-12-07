@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +36,8 @@ public class JournalLoadActivity extends AppCompatActivity {
 
     private DiaryAdapter listAdapter;
 
+    private static final String TAG = "MainActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +49,17 @@ public class JournalLoadActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Diary");
-        ArrayList<Diary> diaryList = new ArrayList<Diary>();
+        ArrayList<Diary> diaryList = new ArrayList<>();
 
         childEventListener = new ChildEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 listAdapter.add(dataSnapshot.getValue(Diary.class));
+                System.out.println("\n");
+                System.out.println("Month: " + dataSnapshot.getValue(Diary.class).getMonth());
+                System.out.println("Day: " + dataSnapshot.getValue(Diary.class).getDay());
+                System.out.println("Year: " + dataSnapshot.getValue(Diary.class).getYear());
+                System.out.println("Diary: " + dataSnapshot.getValue(Diary.class).getDiary());
             }
 
             @Override
@@ -74,7 +82,6 @@ public class JournalLoadActivity extends AppCompatActivity {
 
             }
         };
-
         myRef.addChildEventListener(childEventListener);
 
         listAdapter = new DiaryAdapter(this, diaryList);

@@ -1,6 +1,11 @@
-// Jonathan Huang
-// Implemented all functions, and all the functions were almost working fine,
-// but something happened and the app keeps crashing.
+/* Jonathan Huang
+
+Implemented all functions, and all the functions were almost working fine,
+but something happened and the app keeps crashing.
+I couldn't find the bug in my code,
+but the app should be mostly functional if the bug was solved.
+
+*/
 
 package com.example.productivityapp;
 

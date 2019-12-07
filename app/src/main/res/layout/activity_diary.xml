@@ -8,11 +8,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ToDoList">
+    tools:context=".DiaryActivity">
 
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/newEntryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="29dp"
@@ -30,25 +30,25 @@
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="3dp"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/searchEntryButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/newEntryButton" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/searchEntryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="6dp"
         android:text="Search"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
+        app:layout_constraintEnd_toStartOf="@+id/deleteEntry"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EntryList" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/deleteEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="2dp"
@@ -56,5 +56,5 @@
         android:text="Delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button3" />
+        app:layout_constraintStart_toEndOf="@+id/searchEntryButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

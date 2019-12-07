@@ -30,6 +30,10 @@ public class ToDoList extends AppCompatActivity {
     private com.google.firebase.database.DatabaseReference database;
 
     private Button addTaskButton;
+    private Button clearCheckedEventsButton;
+    private Button prevFiveButton;
+    private Button nextFiveButton;
+
     private TextInputLayout addTaskInputText;
     private LinearLayout scrollViewLinearLayout;
 
@@ -45,7 +49,12 @@ public class ToDoList extends AppCompatActivity {
         setContentView(R.layout.activity_to_do_list);
 
         database = FirebaseDatabase.getInstance().getReference();
+
         addTaskButton = findViewById(R.id.addTaskButton);
+        clearCheckedEventsButton = findViewById(R.id.clearCheckedEvents);
+        prevFiveButton = findViewById(R.id.prevButton);
+        nextFiveButton = findViewById(R.id.nextButton);
+
         scrollViewLinearLayout = findViewById(R.id.scrollViewLinearLayout);
         addTaskInputText = findViewById(R.id.addTaskTextInput);
 
@@ -53,6 +62,7 @@ public class ToDoList extends AppCompatActivity {
         allToDoItems = new HashMap<>();
 
         loadToDoItems();
+        loadToDoItemsIntoTempArrayList();
         populateScrollView();
 
         toDoItemWindowStart = 0;
@@ -62,6 +72,27 @@ public class ToDoList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onAddTextButtonClick();
+            }
+        });
+
+        clearCheckedEventsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteCheckedToDoListItems();
+            }
+        });
+
+        prevFiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPreviousFiveToDoListItems();
+            }
+        });
+
+        nextFiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getNextFiveToDoListItems();
             }
         });
     }
@@ -78,9 +109,9 @@ public class ToDoList extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 ToDoItem toDoItem = dataSnapshot.getValue(ToDoItem.class);
                 allToDoItems.put(dataSnapshot.getKey(), toDoItem);
-                if (toDoItems.size() < 5) {
-                    toDoItems.put(dataSnapshot.getKey(), toDoItem);
-                }
+//                if (toDoItems.size() < 5) {
+//                    toDoItems.put(dataSnapshot.getKey(), toDoItem);
+//                }
             }
 
             @Override
@@ -95,6 +126,18 @@ public class ToDoList extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+    }
+
+    public void loadToDoItemsIntoTempArrayList()
+    {
+        for (String key : allToDoItems.keySet()) {
+            if (toDoItems.size() < 5) {
+                toDoItems.put(key, allToDoItems.get(key));
+            }
+            else {
+                break;
+            }
+        }
     }
 
     // Dynamically instantiates checkboxes and sets their attributes (checked or unchecked
@@ -112,22 +155,24 @@ public class ToDoList extends AppCompatActivity {
     // Updates the array to store the previous 5 to do list items.
     private void getPreviousFiveToDoListItems()
     {
-
+        if (toDoItemWindowStart != 0) {
+            toDoItemWindowStart -= 5;
+            toDoItemWindowEnd -= 5;
+        }
     }
 
     // Updates the array to store the next 5 to do list items.
     private void getNextFiveToDoListItems()
     {
-
+        toDoItemWindowStart += 5;
+        toDoItemWindowEnd += 5;
     }
 
     // Deletes all checked to do list items
     private void deleteCheckedToDoListItems()
     {
-        for (String key : toDoItems.keySet())
-        {
-             if (toDoItems.get(key).getComplete())
-            {
+        for (String key : toDoItems.keySet()) {
+             if (toDoItems.get(key).getComplete()) {
                 database.child("ToDoListItems").child(key).removeValue();
             }
         }

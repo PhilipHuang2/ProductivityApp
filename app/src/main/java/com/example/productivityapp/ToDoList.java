@@ -54,13 +54,20 @@ public class ToDoList extends AppCompatActivity {
         // DatabaseReference ref = database.child("ToDoListItems");
         String text = this.addTaskInputText.getEditText().getText().toString();
         if (text != "") {
-            // insert to do list item
-            String key = database.child("ToDoListItems").push().getKey();
-            ToDoItem toDoItem = new ToDoItem(text);
-            database.child("ToDoListItems").child(key).setValue(toDoItem);
-
-            // clear the edit text field
-            addTaskInputText.getEditText().getText().clear();
+            insertToDoListItem(text);
+            clearEditTextField();
         }
+    }
+
+    private void insertToDoListItem(String text)
+    {
+        String key = database.child("ToDoListItems").push().getKey();
+        ToDoItem toDoItem = new ToDoItem(text);
+        database.child("ToDoListItems").child(key).setValue(toDoItem);
+    }
+
+    private void clearEditTextField()
+    {
+        addTaskInputText.getEditText().getText().clear();
     }
 }

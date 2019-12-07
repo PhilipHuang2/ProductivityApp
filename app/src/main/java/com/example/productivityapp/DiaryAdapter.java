@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 
 public class DiaryAdapter extends ArrayAdapter<Diary> {
     private Context mContext;
-    private List<Diary> contactList = new ArrayList<Diary>();
+    private List<Diary> contactList;
 
     public DiaryAdapter(Context context, ArrayList<Diary> list)
     {

@@ -15,10 +15,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ScrollView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ToDoList extends AppCompatActivity {
@@ -26,13 +30,18 @@ public class ToDoList extends AppCompatActivity {
     private com.google.firebase.database.DatabaseReference database;
 
     private Button addTaskButton;
+    private Button clearCheckedEventsButton;
+    private Button prevFiveButton;
+    private Button nextFiveButton;
+
     private TextInputLayout addTaskInputText;
-    private ScrollView scrollView;
+    private LinearLayout scrollViewLinearLayout;
 
-    private ToDoItem[] toDoItems;
+    private Map<String, ToDoItem> toDoItems;
+    private Map<String, ToDoItem> allToDoItems;
 
-    private ArrayList<ToDoItem> allToDoItems;
-    // private ListAdapter<To>
+    private int toDoItemWindowStart;
+    private int toDoItemWindowEnd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +49,24 @@ public class ToDoList extends AppCompatActivity {
         setContentView(R.layout.activity_to_do_list);
 
         database = FirebaseDatabase.getInstance().getReference();
-        addTaskButton = findViewById(R.id.addTaskButton);
-        scrollView = findViewById(R.id.scrollView);
 
-        toDoItems = new ToDoItem[5];
-        allToDoItems = new ArrayList<>();
+        addTaskButton = findViewById(R.id.addTaskButton);
+        clearCheckedEventsButton = findViewById(R.id.clearCheckedEvents);
+        prevFiveButton = findViewById(R.id.prevButton);
+        nextFiveButton = findViewById(R.id.nextButton);
+
+        scrollViewLinearLayout = findViewById(R.id.scrollViewLinearLayout);
+        addTaskInputText = findViewById(R.id.addTaskTextInput);
+
+        toDoItems = new HashMap<>(5);
+        allToDoItems = new HashMap<>();
 
         loadToDoItems();
+        loadToDoItemsIntoTempArrayList();
         populateScrollView();
 
-        addTaskInputText = findViewById(R.id.addTaskTextInput);
+        toDoItemWindowStart = 0;
+        toDoItemWindowEnd = 4;
 
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,39 +74,108 @@ public class ToDoList extends AppCompatActivity {
                 onAddTextButtonClick();
             }
         });
+
+        clearCheckedEventsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteCheckedToDoListItems();
+            }
+        });
+
+        prevFiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPreviousFiveToDoListItems();
+            }
+        });
+
+        nextFiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getNextFiveToDoListItems();
+            }
+        });
     }
 
     // Load all Firebase data into the array of 5 to do list items (in RAM).
     private void loadToDoItems()
     {
-        DatabaseReference ref = database.child("ToDoListItems");
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference ref = db.getReference("ToDoListItems");
+        //DatabaseReference ref = db.getReference("");
 
-        
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                ToDoItem toDoItem = dataSnapshot.getValue(ToDoItem.class);
+                allToDoItems.put(dataSnapshot.getKey(), toDoItem);
+//                if (toDoItems.size() < 5) {
+//                    toDoItems.put(dataSnapshot.getKey(), toDoItem);
+//                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    public void loadToDoItemsIntoTempArrayList()
+    {
+        for (String key : allToDoItems.keySet()) {
+            if (toDoItems.size() < 5) {
+                toDoItems.put(key, allToDoItems.get(key));
+            }
+            else {
+                break;
+            }
+        }
     }
 
     // Dynamically instantiates checkboxes and sets their attributes (checked or unchecked
-    // and the text), max 5, in the View.
+    // and the text), max 5, in the ScrollView.
     private void populateScrollView()
     {
-
+        for (ToDoItem tdi : toDoItems.values()) {
+            CheckBox checkBox = new CheckBox(getBaseContext());
+            checkBox.setText(tdi.getItem());
+            checkBox.setChecked(tdi.getComplete());
+            scrollViewLinearLayout.addView(checkBox);
+        }
     }
 
     // Updates the array to store the previous 5 to do list items.
     private void getPreviousFiveToDoListItems()
     {
-
+        if (toDoItemWindowStart != 0) {
+            toDoItemWindowStart -= 5;
+            toDoItemWindowEnd -= 5;
+        }
     }
 
     // Updates the array to store the next 5 to do list items.
     private void getNextFiveToDoListItems()
     {
-
+        toDoItemWindowStart += 5;
+        toDoItemWindowEnd += 5;
     }
 
     // Deletes all checked to do list items
     private void deleteCheckedToDoListItems()
     {
-        // delete by key
+        for (String key : toDoItems.keySet()) {
+             if (toDoItems.get(key).getComplete()) {
+                database.child("ToDoListItems").child(key).removeValue();
+            }
+        }
     }
 
     private void onAddTextButtonClick()

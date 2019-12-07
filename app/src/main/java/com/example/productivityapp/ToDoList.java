@@ -1,3 +1,7 @@
+// Jonathan Huang
+// Implemented all functions, and all the functions were almost working fine,
+// but something happened and the app keeps crashing.
+
 package com.example.productivityapp;
 
 import android.os.Bundle;
@@ -145,7 +149,7 @@ public class ToDoList extends AppCompatActivity {
     private void populateScrollView()
     {
         for (ToDoItem tdi : toDoItems.values()) {
-            CheckBox checkBox = new CheckBox(getBaseContext());
+            CheckBox checkBox = new CheckBox(getApplicationContext());
             checkBox.setText(tdi.getItem());
             checkBox.setChecked(tdi.getComplete());
             scrollViewLinearLayout.addView(checkBox);
@@ -164,8 +168,10 @@ public class ToDoList extends AppCompatActivity {
     // Updates the array to store the next 5 to do list items.
     private void getNextFiveToDoListItems()
     {
-        toDoItemWindowStart += 5;
-        toDoItemWindowEnd += 5;
+        if (toDoItemWindowEnd + 5 <= allToDoItems.size() - 1) {
+            toDoItemWindowStart += 5;
+            toDoItemWindowEnd += 5;
+        }
     }
 
     // Deletes all checked to do list items

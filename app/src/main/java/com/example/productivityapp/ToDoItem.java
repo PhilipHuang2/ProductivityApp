@@ -1,5 +1,8 @@
 package com.example.productivityapp;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ToDoItem implements Comparable<ToDoItem> {
     private String item;
     private boolean complete;
@@ -33,5 +36,13 @@ public class ToDoItem implements Comparable<ToDoItem> {
         return getItem().compareTo(anotherOne.getItem());
     }
 
+    public Map<String, Object> toMap()
+    {
+        HashMap<String, Object> result = new HashMap<>();
 
+        result.put("item", item);
+        result.put("complete", complete);
+
+        return result;
+    }
 }

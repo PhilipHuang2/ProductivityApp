@@ -39,6 +39,7 @@ public class JournalLoadActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,19 +48,19 @@ public class JournalLoadActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Intent intent = getIntent();
+        final int day = intent.getIntExtra("day",0);
+        final int month = intent.getIntExtra("month",0);
+        final int year = intent.getIntExtra("year",0);
+
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Diary");
-        ArrayList<Diary> diaryList = new ArrayList<>();
+        final ArrayList<Diary> diaryList = new ArrayList<>();
 
         childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 listAdapter.add(dataSnapshot.getValue(Diary.class));
-                System.out.println("\n");
-                System.out.println("Month: " + dataSnapshot.getValue(Diary.class).getMonth());
-                System.out.println("Day: " + dataSnapshot.getValue(Diary.class).getDay());
-                System.out.println("Year: " + dataSnapshot.getValue(Diary.class).getYear());
-                System.out.println("Diary: " + dataSnapshot.getValue(Diary.class).getDiary());
             }
 
             @Override
@@ -88,18 +89,19 @@ public class JournalLoadActivity extends AppCompatActivity {
         ListView results = findViewById(R.id.listViewResults);
         results.setAdapter(listAdapter);
 
-
-        Intent intent = getIntent();
-        final int day = intent.getIntExtra("day",0);
-        final int month = intent.getIntExtra("month",0);
-        final int year = intent.getIntExtra("year",0);
-
         TextView loadJournalTitle;
         loadJournalTitle = findViewById(R.id.loadJournalTitle);
         String date = "The Diaries from " + month + "/" + day +  "/" + year;
         loadJournalTitle.setText(date);
 
 
-    }
+//        for(Diary d : diaryList)
+//        {
+//            if(d.getYear() == year)// && d.getMonth() == month && d.getDay() == day);
+//
+//                loadJournalTitle.setText(d.getDiary());//listAdapter.add(d);
+//
+//        }
 
+    }
 }
